@@ -1,13 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fresh_cart/res/components/category_list.dart';
+import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
-class Homeview extends StatefulWidget {
-  const Homeview({super.key});
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
 
   @override
-  State<Homeview> createState() => _HomeviewState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeviewState extends State<Homeview> {
+class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -23,59 +28,146 @@ class _HomeviewState extends State<Homeview> {
         ),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Exclusive Offer',
-                  style: theme.textTheme.titleLarge!.copyWith(
-                    fontWeight: FontWeight.bold,
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  CategoryList(
+                    text: 'Produce',
+                    onpress: () {},
                   ),
-                ),
-                Text(
-                  'See all',
-                  style: theme.textTheme.labelLarge!.copyWith(
-                    fontWeight: FontWeight.bold,
+                  CategoryList(
+                    text: 'Dairy',
+                    onpress: () {},
                   ),
-                ),
-              ],
+                  CategoryList(
+                    text: 'Bakery',
+                    onpress: () {},
+                  ),
+                  CategoryList(
+                    text: 'Pantry',
+                    onpress: () {},
+                  ),
+                  CategoryList(
+                    text: 'Beverages',
+                    onpress: () {},
+                  ),
+                  CategoryList(
+                    text: 'Snacks',
+                    onpress: () {},
+                  ),
+                  CategoryList(
+                    text: 'Personal Care',
+                    onpress: () {},
+                  ),
+                  CategoryList(
+                    text: 'Household',
+                    onpress: () {},
+                  ),
+                ],
+              ),
             ),
+            const Gap(24),
             Expanded(
-                child: GridView.builder(
-                    itemCount: 6,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      childAspectRatio: .7,
-                      mainAxisSpacing: 10,
-                    ),
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Image.network(
-                                  'https://i.pinimg.com/564x/d1/3f/90/d13f903abaf792acc432bbd046fbf500.jpg'),
-                              Text(
-                                'Potato',
-                                style: theme.textTheme.bodyLarge!.copyWith(
-                                  fontWeight: FontWeight.bold,
+              child: GridView.builder(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: .63,
+                ),
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return Stack(
+                    children: [
+                      Container(
+                        width: Get.width * .55,
+                        height: Get.height * .6,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      Positioned(
+                        top: 55,
+                        right: 8,
+                        child: Center(
+                          child: InkWell(
+                            onTap: () {},
+                            child: Container(
+                              width: Get.width * .4,
+                              height: Get.height * .22,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 8,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    theme.colorScheme.primary.withOpacity(.15),
+                                    theme.colorScheme.primary.withOpacity(.1),
+                                  ],
                                 ),
                               ),
-                              Text(
-                                '\$100',
-                                style: theme.textTheme.bodyLarge!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )
-                            ],
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Atta (Wheat flour)',
+                                    style: theme.textTheme.bodyLarge!.copyWith(
+                                      color: theme.colorScheme.onBackground,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const Gap(5),
+                                  Text(
+                                    '₹50',
+                                    style: theme.textTheme.bodyLarge!.copyWith(
+                                      color: theme.colorScheme.primary,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
                           ),
                         ),
-                      );
-                    }))
+                      ),
+                      Positioned(
+                        top: 0,
+                        left: 25,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(150),
+                          child: CachedNetworkImage(
+                            width: Get.width * .3,
+                            height: Get.height * .13,
+                            imageUrl:
+                                'https://5.imimg.com/data5/KC/UD/MY-6339954/wheat-flour-chakki-atta-500x500.jpg',
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) => Shimmer.fromColors(
+                              baseColor: Colors.black.withOpacity(0.2),
+                              highlightColor: Colors.white54,
+                              enabled: true,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),

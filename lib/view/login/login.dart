@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fresh_cart/view/home/home.dart';
 import 'package:fresh_cart/view/signup/signup.dart';
+import 'package:fresh_cart/view/tab_bar/tab_bar.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
@@ -85,7 +85,7 @@ class _LoginviewState extends State<Loginview> {
                     ),
                     onPressed: () {
                       // _formkey.currentState!.validate();
-                      Get.to(() => const Homeview());
+                      Get.to(() => const TabBarControlView());
                     },
                     child: Text(
                       'Login',
